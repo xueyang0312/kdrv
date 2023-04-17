@@ -9,11 +9,10 @@
 
 int main()
 {
-    char buffer[64];
     int fd;
     int ret;
 
-    char message[] = "Testing the virtual FIFO device";
+    char message[80] = "Testing the virtual FIFO device";
     char *read_buf;
 
     size_t len = sizeof(message);
@@ -27,7 +26,7 @@ int main()
     }
 
     read_buf = (char *)malloc(2 * len);
-    memset(read_buf, 0, sizeof(read_buf));
+    memset(read_buf, 0, 2 * len);
 
     ret = read(fd, read_buf, sizeof(read_buf));
     printf("read %d bytes\r\n", ret);
@@ -36,16 +35,14 @@ int main()
     ret = write(fd, message, len);
     if (ret != len) {
         printf("have write %d bytes\n", ret);
-        return -1;
     }
 
     ret = write(fd, message, len);
     if (ret != len) {
         printf("have write %d bytes\n", ret);
-        return -1;
     }
 
-    ret = read(fd, read_buf, sizeof(read_buf));
+    ret = read(fd, read_buf, 2 * len);
     printf("read %d bytes\r\n", ret);
     printf("read buffer=%s\r\n", read_buf);
     return 0;
