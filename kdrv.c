@@ -23,6 +23,10 @@ static DEFINE_MUTEX(kfifo_mutex);
 
 DEFINE_KFIFO(myfifo, char, 64);
 
+/**
+ * ! Modify the char device driver's read and write operations to be non-blocking.
+*/
+
 static ssize_t kfifo_read(struct file *file,
                           char __user *buf,
                           size_t size,
@@ -30,6 +34,11 @@ static ssize_t kfifo_read(struct file *file,
 {
     int ret;
     int actual_readed;
+
+    if (kfifo_is_empty(&myfifo)) {
+        if (file->f_flags & O_NONBLOCK)
+            return -EAGAIN;
+    }
 
     ret = kfifo_to_user(&myfifo, buf, size, &actual_readed);
     if (ret)
@@ -46,6 +55,11 @@ static ssize_t kfifo_write(struct file *file,
 {
     unsigned int actual_write;
     int ret;
+
+    if (kfifo_is_full(&myfifo)) {
+        if (file->f_flags & O_NONBLOCK)
+            return -EAGAIN;
+    }
 
     ret = kfifo_from_user(&myfifo, buf, size, &actual_write);
     if (ret)
