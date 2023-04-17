@@ -1,0 +1,13 @@
+
+# Object files
+*.o
+*.ko
+
+# Kernel Module Compile Results
+modules.order
+Module.symvers
+*.cmd
+*.mod*
+
+# test-oriented
+client

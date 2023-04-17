@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${default}",
+                "/lib/modules/5.15.0-67-generic/build/arch/x86/include",
+                "/lib/modules/5.15.0-67-generic/build/arch/x86/include/generated",
+                "/lib/modules/5.15.0-67-generic/build/include",
+                "/lib/modules/5.15.0-67-generic/build/include/generated",
+                "/usr/src/linux-hwe-5.15-headers-5.15.0-67/include/uapi"
+            ],
+            "defines": [
+                "MODULE",
+                "__KERNEL__"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
